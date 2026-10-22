@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Special Surprise</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    padding: 24px; color: #fff5dc; text-align: center;
+    font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+    background: radial-gradient(ellipse at top, #443015 0%, #17121d 42%, #080910 100%);
+  }
+  main { width: min(680px, 100%); }
+  .sparkle { font-size: 2rem; margin-bottom: 10px; }
+  h1 { font-family: Georgia, serif; font-size: clamp(2rem, 7vw, 3.8rem); margin: 0 0 12px; }
+  p { color: #d8c9b2; line-height: 1.6; }
+  .timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 28px 0; }
+  .unit { padding: 18px 6px; border: 1px solid #80652f; border-radius: 14px; background: #ffffff0a; }
+  .num { display: block; font-size: clamp(1.7rem, 6vw, 3rem); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .label { display: block; margin-top: 6px; font-size: .72rem; letter-spacing: .12em; color: #d8bd7a; }
+  .lock { margin: 20px auto; padding: 16px; border: 1px solid #ffffff24; border-radius: 14px; }
+  a.button { display: inline-block; margin-top: 12px; padding: 14px 24px; border-radius: 999px;
+    color: #17121d; background: linear-gradient(135deg, #f6d98b, #c99b43);
+    text-decoration: none; font-weight: 800; }
+  a.button[hidden] { display: none; }
+  .small { font-size: .85rem; color: #a99d8b; }
+  @media (max-width: 420px) { .timer { gap: 6px; } .unit { padding: 13px 3px; } .label { font-size: .6rem; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="sparkle">✦ ✧ ✦</div>
+  <h1>A Special Surprise</h1>
+  <p>Something special is waiting for you.<br>Come back when the countdown ends ✨</p>
+  <div class="timer" aria-live="polite">
+    <div class="unit"><span class="num" id="days">00</span><span class="label">DAYS</span></div>
+    <div class="unit"><span class="num" id="hours">00</span><span class="label">HOURS</span></div>
+    <div class="unit"><span class="num" id="minutes">00</span><span class="label">MINUTES</span></div>
+    <div class="unit"><span class="num" id="seconds">00</span><span class="label">SECONDS</span></div>
+  </div>
+  <div class="lock">
+    <div id="status">🔒 Your surprise opens at 9:30 PM IST.</div>
+    <a class="button" id="reveal" href="https://liyongopi.my.canva.site/happy-birthday-athi" target="_blank" rel="noopener noreferrer" hidden>Open Your Surprise 🎁</a>
+  </div>
+  <p class="small">Reveal time: 22 October 2026 · 9:30 PM IST</p>
+</main>
+<script>
+  // 22 October 2026, 9:30 PM in India Standard Time (UTC+05:30)
+  const target = new Date("2026-10-22T21:30:00+05:30").getTime();
+  const ids = ["days", "hours", "minutes", "seconds"];
+  function updateCountdown() {
+    let remaining = target - Date.now();
+    if (remaining <= 0) {
+      ids.forEach(id => document.getElementById(id).textContent = "00");
+      document.getElementById("status").textContent = "🎉 Your surprise is ready!";
+      document.getElementById("reveal").hidden = false;
+      return;
+    }
+    const values = [
+      Math.floor(remaining / 86400000),
+      Math.floor((remaining % 86400000) / 3600000),
+      Math.floor((remaining % 3600000) / 60000),
+      Math.floor((remaining % 60000) / 1000)
+    ];
+    ids.forEach((id, i) => document.getElementById(id).textContent = String(values[i]).padStart(2, "0"));
+    document.getElementById("status").textContent = "🔒 Your surprise opens at 9:30 PM IST.";
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
