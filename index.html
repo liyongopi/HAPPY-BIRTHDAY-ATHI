@@ -1,75 +1,181 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>A Special Surprise</title>
-<style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh; display: grid; place-items: center;
-    padding: 24px; color: #fff5dc; text-align: center;
-    font-family: system-ui, -apple-system, Segoe UI, sans-serif;
-    background: radial-gradient(ellipse at top, #443015 0%, #17121d 42%, #080910 100%);
-  }
-  main { width: min(680px, 100%); }
-  .sparkle { font-size: 2rem; margin-bottom: 10px; }
-  h1 { font-family: Georgia, serif; font-size: clamp(2rem, 7vw, 3.8rem); margin: 0 0 12px; }
-  p { color: #d8c9b2; line-height: 1.6; }
-  .timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 28px 0; }
-  .unit { padding: 18px 6px; border: 1px solid #80652f; border-radius: 14px; background: #ffffff0a; }
-  .num { display: block; font-size: clamp(1.7rem, 6vw, 3rem); font-weight: 700; font-variant-numeric: tabular-nums; }
-  .label { display: block; margin-top: 6px; font-size: .72rem; letter-spacing: .12em; color: #d8bd7a; }
-  .lock { margin: 20px auto; padding: 16px; border: 1px solid #ffffff24; border-radius: 14px; }
-  a.button { display: inline-block; margin-top: 12px; padding: 14px 24px; border-radius: 999px;
-    color: #17121d; background: linear-gradient(135deg, #f6d98b, #c99b43);
-    text-decoration: none; font-weight: 800; }
-  a.button[hidden] { display: none; }
-  .small { font-size: .85rem; color: #a99d8b; }
-  @media (max-width: 420px) { .timer { gap: 6px; } .unit { padding: 13px 3px; } .label { font-size: .6rem; } }
-</style>
-</head>
-<body>
-<main>
-  <div class="sparkle">✦ ✧ ✦</div>
-  <h1>A Special Surprise</h1>
-  <p>Something special is waiting for you.<br>Come back when the countdown ends ✨</p>
-  <div class="timer" aria-live="polite">
-    <div class="unit"><span class="num" id="days">00</span><span class="label">DAYS</span></div>
-    <div class="unit"><span class="num" id="hours">00</span><span class="label">HOURS</span></div>
-    <div class="unit"><span class="num" id="minutes">00</span><span class="label">MINUTES</span></div>
-    <div class="unit"><span class="num" id="seconds">00</span><span class="label">SECONDS</span></div>
-  </div>
-  <div class="lock">
-    <div id="status">🔒 Your surprise opens at 9:30 PM IST.</div>
-    <a class="button" id="reveal" href="https://liyongopi.my.canva.site/happy-birthday-athi" target="_blank" rel="noopener noreferrer" hidden>Open Your Surprise 🎁</a>
-  </div>
-  <p class="small">Reveal time: 22 October 2026 · 9:30 PM IST</p>
-</main>
-<script>
-  // 22 October 2026, 9:30 PM in India Standard Time (UTC+05:30)
-  const target = new Date("2026-10-22T21:30:00+05:30").getTime();
-  const ids = ["days", "hours", "minutes", "seconds"];
-  function updateCountdown() {
-    let remaining = target - Date.now();
-    if (remaining <= 0) {
-      ids.forEach(id => document.getElementById(id).textContent = "00");
-      document.getElementById("status").textContent = "🎉 Your surprise is ready!";
-      document.getElementById("reveal").hidden = false;
-      return;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Surprise 🎂</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
     }
-    const values = [
-      Math.floor(remaining / 86400000),
-      Math.floor((remaining % 86400000) / 3600000),
-      Math.floor((remaining % 3600000) / 60000),
-      Math.floor((remaining % 60000) / 1000)
-    ];
-    ids.forEach((id, i) => document.getElementById(id).textContent = String(values[i]).padStart(2, "0"));
-    document.getElementById("status").textContent = "🔒 Your surprise opens at 9:30 PM IST.";
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-</script>
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3, #a18cd1);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 520px;
+      padding: 35px 22px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 25px;
+      background: rgba(255,255,255,0.16);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      backdrop-filter: blur(12px);
+    }
+
+    .cake {
+      font-size: 65px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 7vw, 42px);
+      margin: 10px 0;
+    }
+
+    p {
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .timer {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin: 28px 0;
+    }
+
+    .time-box {
+      padding: 15px 4px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.22);
+    }
+
+    .number {
+      display: block;
+      font-size: clamp(23px, 6vw, 32px);
+      font-weight: bold;
+    }
+
+    .label {
+      display: block;
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    #surprise {
+      display: none;
+      margin-top: 25px;
+    }
+
+    .open-btn {
+      display: inline-block;
+      padding: 16px 25px;
+      border-radius: 30px;
+      background: #fff;
+      color: #e84393;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: bold;
+      box-shadow: 0 5px 18px rgba(0,0,0,0.18);
+    }
+
+    .open-btn:hover {
+      transform: scale(1.04);
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="cake">🎂🎉🎁</div>
+
+    <h1>Birthday Surprise!</h1>
+    <p>A special surprise is waiting for you, Athi! 💖</p>
+    <p>Something magical is about to begin...</p>
+
+    <div id="countdown">
+      <div class="timer">
+        <div class="time-box">
+          <span class="number" id="days">00</span>
+          <span class="label">DAYS</span>
+        </div>
+        <div class="time-box">
+          <span class="number" id="hours">00</span>
+          <span class="label">HOURS</span>
+        </div>
+        <div class="time-box">
+          <span class="number" id="minutes">00</span>
+          <span class="label">MINUTES</span>
+        </div>
+        <div class="time-box">
+          <span class="number" id="seconds">00</span>
+          <span class="label">SECONDS</span>
+        </div>
+      </div>
+      <p>✨ The surprise unlocks at midnight! ✨</p>
+    </div>
+
+    <div id="surprise">
+      <h2>🎊 It's Time, Athi! 🎊</h2>
+      <p>Happy Birthday! Your special surprise is ready. ❤️</p>
+      <a class="open-btn"
+         href="https://liyongopi.my.canva.site/happy-birthday-athi"
+         target="_blank"
+         rel="noopener noreferrer">
+        🎁 Open Birthday Surprise
+      </a>
+    </div>
+
+    <div class="footer">Made with ❤️ just for you</div>
+  </main>
+
+  <script>
+    // Midnight after October 26, 2026 (Indian Standard Time)
+    const targetDate = new Date("2026-10-27T00:00:00+05:30");
+
+    function updateCountdown() {
+      const remaining = targetDate.getTime() - Date.now();
+
+      if (remaining <= 0) {
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("surprise").style.display = "block";
+        return;
+      }
+
+      document.getElementById("days").textContent =
+        String(Math.floor(remaining / 86400000)).padStart(2, "0");
+
+      document.getElementById("hours").textContent =
+        String(Math.floor((remaining % 86400000) / 3600000)).padStart(2, "0");
+
+      document.getElementById("minutes").textContent =
+        String(Math.floor((remaining % 3600000) / 60000)).padStart(2, "0");
+
+      document.getElementById("seconds").textContent =
+        String(Math.floor((remaining % 60000) / 1000)).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
